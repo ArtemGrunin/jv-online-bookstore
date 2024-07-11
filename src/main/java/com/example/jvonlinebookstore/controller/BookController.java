@@ -1,6 +1,5 @@
 package com.example.jvonlinebookstore.controller;
 
-import com.example.jvonlinebookstore.model.Book;
 import com.example.jvonlinebookstore.model.dto.BookDto;
 import com.example.jvonlinebookstore.model.dto.CreateBookRequestDto;
 import com.example.jvonlinebookstore.service.BookService;

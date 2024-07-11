@@ -21,7 +21,8 @@ public class GlobalExceptionHandler {
     }
 
     @ExceptionHandler(BookAlreadyExistsException.class)
-    public ResponseEntity<ErrorDto> handleProfileAlreadyExistsException(BookAlreadyExistsException e) {
+    public ResponseEntity<ErrorDto> handleProfileAlreadyExistsException(
+            BookAlreadyExistsException e) {
         String errorId = buildErrorId();
         log.error("Book already exists, id: {}", errorId, e);
         return buildErrorResponse(HttpStatus.CONFLICT, e.getMessage(), errorId);
@@ -31,10 +32,14 @@ public class GlobalExceptionHandler {
     public ResponseEntity<ErrorDto> handleGenericException(Exception e) {
         String errorId = buildErrorId();
         log.error("Internal server error, id: {}, message: {}", errorId, e.getMessage(), e);
-        return buildErrorResponse(HttpStatus.INTERNAL_SERVER_ERROR, "Internal server error", errorId);
+        return buildErrorResponse(HttpStatus.INTERNAL_SERVER_ERROR,
+                "Internal server error", errorId);
     }
 
-    private ResponseEntity<ErrorDto> buildErrorResponse(HttpStatus status, String message, String errorId) {
+    private ResponseEntity<ErrorDto> buildErrorResponse(
+            HttpStatus status,
+            String message,
+            String errorId) {
         ErrorDto errorDto = new ErrorDto();
         errorDto.setId(errorId);
         errorDto.setMessage(message);
