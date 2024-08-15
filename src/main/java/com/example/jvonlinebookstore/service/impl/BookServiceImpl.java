@@ -6,6 +6,7 @@ import com.example.jvonlinebookstore.mapper.BookMapper;
 import com.example.jvonlinebookstore.model.Book;
 import com.example.jvonlinebookstore.model.dto.BookDto;
 import com.example.jvonlinebookstore.model.dto.CreateBookRequestDto;
+import com.example.jvonlinebookstore.model.dto.UpdateBookRequestDTO;
 import com.example.jvonlinebookstore.repository.JpaBookRepository;
 import com.example.jvonlinebookstore.service.BookService;
 import java.util.List;
@@ -43,7 +44,27 @@ public class BookServiceImpl implements BookService {
         return mapper.toDto(book);
     }
 
+    @Override
+    public BookDto update(Long id, UpdateBookRequestDTO dto) {
+        Book book = isPresent(id);
+        mapper.updateBookFromDTO(dto, book);
+        book = repository.save(book);
+        return mapper.toDto(book);
+    }
+
+    @Override
+    public void delete(Long id) {
+        isPresent(id);
+        repository.deleteById(id);
+    }
+
     private boolean isBookExists(CreateBookRequestDto request) {
         return repository.findByIsbn(request.getIsbn()).isPresent();
+    }
+
+    private Book isPresent(Long id) {
+        return repository.findById(id)
+                .orElseThrow(() -> new BookNotFoundException("Cannot find Book with id: %s"
+                        .formatted(id)));
     }
 }
