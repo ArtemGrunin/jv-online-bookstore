@@ -6,7 +6,7 @@ import lombok.Data;
 
 @Builder
 @Data
-public class UpdateBookRequestDTO {
+public class UpdateBookRequestDto {
     private String title;
     private String author;
     private String isbn;

@@ -2,7 +2,7 @@ package com.example.jvonlinebookstore.controller;
 
 import com.example.jvonlinebookstore.model.dto.BookDto;
 import com.example.jvonlinebookstore.model.dto.CreateBookRequestDto;
-import com.example.jvonlinebookstore.model.dto.UpdateBookRequestDTO;
+import com.example.jvonlinebookstore.model.dto.UpdateBookRequestDto;
 import com.example.jvonlinebookstore.service.BookService;
 import java.util.List;
 import lombok.RequiredArgsConstructor;
@@ -46,15 +46,15 @@ public class BookController {
     }
 
     @PutMapping("/{id}")
-    public ResponseEntity<BookDto> updateCustomer(
+    public ResponseEntity<BookDto> update(
             @PathVariable Long id,
-            @RequestBody UpdateBookRequestDTO dto) {
-        BookDto customerResponseDTO = bookService.update(id, dto);
-        return ResponseEntity.ok(customerResponseDTO);
+            @RequestBody UpdateBookRequestDto dto) {
+        BookDto bookDto = bookService.update(id, dto);
+        return ResponseEntity.ok(bookDto);
     }
 
     @DeleteMapping("/{id}")
-    public ResponseEntity<Void> deleteCustomer(@PathVariable Long id) {
+    public ResponseEntity<Void> delete(@PathVariable Long id) {
         bookService.delete(id);
         return ResponseEntity.noContent().build();
     }

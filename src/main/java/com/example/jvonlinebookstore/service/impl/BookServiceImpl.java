@@ -6,7 +6,7 @@ import com.example.jvonlinebookstore.mapper.BookMapper;
 import com.example.jvonlinebookstore.model.Book;
 import com.example.jvonlinebookstore.model.dto.BookDto;
 import com.example.jvonlinebookstore.model.dto.CreateBookRequestDto;
-import com.example.jvonlinebookstore.model.dto.UpdateBookRequestDTO;
+import com.example.jvonlinebookstore.model.dto.UpdateBookRequestDto;
 import com.example.jvonlinebookstore.repository.JpaBookRepository;
 import com.example.jvonlinebookstore.service.BookService;
 import java.util.List;
@@ -45,9 +45,9 @@ public class BookServiceImpl implements BookService {
     }
 
     @Override
-    public BookDto update(Long id, UpdateBookRequestDTO dto) {
+    public BookDto update(Long id, UpdateBookRequestDto dto) {
         Book book = isPresent(id);
-        mapper.updateBookFromDTO(dto, book);
+        mapper.updateBookFromDto(dto, book);
         book = repository.save(book);
         return mapper.toDto(book);
     }
