@@ -5,12 +5,15 @@ import com.example.jvonlinebookstore.exception.BookNotFoundException;
 import com.example.jvonlinebookstore.mapper.BookMapper;
 import com.example.jvonlinebookstore.model.Book;
 import com.example.jvonlinebookstore.model.dto.BookDto;
+import com.example.jvonlinebookstore.model.dto.BookSearchParametersDto;
 import com.example.jvonlinebookstore.model.dto.CreateBookRequestDto;
 import com.example.jvonlinebookstore.model.dto.UpdateBookRequestDto;
-import com.example.jvonlinebookstore.repository.JpaBookRepository;
+import com.example.jvonlinebookstore.repository.book.BookSpecificationBuilder;
+import com.example.jvonlinebookstore.repository.book.JpaBookRepository;
 import com.example.jvonlinebookstore.service.BookService;
 import java.util.List;
 import lombok.RequiredArgsConstructor;
+import org.springframework.data.jpa.domain.Specification;
 import org.springframework.stereotype.Service;
 
 @Service
@@ -18,6 +21,7 @@ import org.springframework.stereotype.Service;
 public class BookServiceImpl implements BookService {
     private final JpaBookRepository repository;
     private final BookMapper mapper;
+    private final BookSpecificationBuilder specificationBuilder;
 
     @Override
     public BookDto save(CreateBookRequestDto request) {
@@ -56,6 +60,14 @@ public class BookServiceImpl implements BookService {
     public void delete(Long id) {
         isPresent(id);
         repository.deleteById(id);
+    }
+
+    @Override
+    public List<BookDto> search(BookSearchParametersDto parameters) {
+        Specification<Book> specification = specificationBuilder.build(parameters);
+        return repository.findAll(specification).stream()
+                .map(mapper::toDto)
+                .toList();
     }
 
     private boolean isBookExists(CreateBookRequestDto request) {

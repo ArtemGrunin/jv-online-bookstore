@@ -1,6 +1,7 @@
 package com.example.jvonlinebookstore.controller;
 
 import com.example.jvonlinebookstore.model.dto.BookDto;
+import com.example.jvonlinebookstore.model.dto.BookSearchParametersDto;
 import com.example.jvonlinebookstore.model.dto.CreateBookRequestDto;
 import com.example.jvonlinebookstore.model.dto.UpdateBookRequestDto;
 import com.example.jvonlinebookstore.service.BookService;
@@ -48,14 +49,24 @@ public class BookController {
     @PutMapping("/{id}")
     public ResponseEntity<BookDto> update(
             @PathVariable Long id,
-            @RequestBody UpdateBookRequestDto dto) {
-        BookDto bookDto = bookService.update(id, dto);
+            @RequestBody UpdateBookRequestDto request) {
+        log.debug("Request for update book: {}", request);
+        BookDto bookDto = bookService.update(id, request);
         return ResponseEntity.ok(bookDto);
     }
 
     @DeleteMapping("/{id}")
     public ResponseEntity<Void> delete(@PathVariable Long id) {
+        log.debug("Request for delete book: {}", id);
         bookService.delete(id);
         return ResponseEntity.noContent().build();
+    }
+
+    @GetMapping("/search")
+    public ResponseEntity<List<BookDto>> search(@RequestBody(required = false)
+                                                    BookSearchParametersDto parametersDto) {
+        log.debug("Request for search book by parameters: {}", parametersDto);
+        List<BookDto> bookDtos = bookService.search(parametersDto);
+        return ResponseEntity.ok(bookDtos);
     }
 }
