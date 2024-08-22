@@ -50,7 +50,7 @@ public class BookServiceImpl implements BookService {
 
     @Override
     public BookDto update(Long id, UpdateBookRequestDto dto) {
-        Book book = isPresent(id);
+        Book book = isBookPresent(id);
         mapper.updateBookFromDto(dto, book);
         book = repository.save(book);
         return mapper.toDto(book);
@@ -58,7 +58,7 @@ public class BookServiceImpl implements BookService {
 
     @Override
     public void delete(Long id) {
-        isPresent(id);
+        isBookPresent(id);
         repository.deleteById(id);
     }
 
@@ -74,7 +74,7 @@ public class BookServiceImpl implements BookService {
         return repository.findByIsbn(request.getIsbn()).isPresent();
     }
 
-    private Book isPresent(Long id) {
+    private Book isBookPresent(Long id) {
         return repository.findById(id)
                 .orElseThrow(() -> new BookNotFoundException("Cannot find Book with id: %s"
                         .formatted(id)));

@@ -64,7 +64,7 @@ public class BookController {
 
     @GetMapping("/search")
     public ResponseEntity<List<BookDto>> search(@RequestBody(required = false)
-                                                    BookSearchParametersDto parametersDto) {
+                                                BookSearchParametersDto parametersDto) {
         log.debug("Request for search book by parameters: {}", parametersDto);
         List<BookDto> bookDtos = bookService.search(parametersDto);
         return ResponseEntity.ok(bookDtos);
