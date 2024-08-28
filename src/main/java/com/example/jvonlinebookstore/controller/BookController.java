@@ -5,6 +5,7 @@ import com.example.jvonlinebookstore.model.dto.BookSearchParametersDto;
 import com.example.jvonlinebookstore.model.dto.CreateBookRequestDto;
 import com.example.jvonlinebookstore.model.dto.UpdateBookRequestDto;
 import com.example.jvonlinebookstore.service.BookService;
+import jakarta.validation.Valid;
 import java.util.List;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
@@ -26,7 +27,7 @@ public class BookController {
     private final BookService bookService;
 
     @PostMapping
-    public ResponseEntity<BookDto> create(@RequestBody CreateBookRequestDto request) {
+    public ResponseEntity<BookDto> create(@RequestBody @Valid CreateBookRequestDto request) {
         log.debug("Request for create new book: {}", request);
         BookDto bookDto = bookService.save(request);
         return ResponseEntity.ok(bookDto);
@@ -49,7 +50,7 @@ public class BookController {
     @PutMapping("/{id}")
     public ResponseEntity<BookDto> update(
             @PathVariable Long id,
-            @RequestBody UpdateBookRequestDto request) {
+            @RequestBody @Valid UpdateBookRequestDto request) {
         log.debug("Request for update book: {}", request);
         BookDto bookDto = bookService.update(id, request);
         return ResponseEntity.ok(bookDto);
