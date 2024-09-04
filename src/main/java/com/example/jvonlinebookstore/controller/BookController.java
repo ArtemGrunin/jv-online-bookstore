@@ -1,73 +1,63 @@
 package com.example.jvonlinebookstore.controller;
 
-import com.example.jvonlinebookstore.model.dto.BookDto;
-import com.example.jvonlinebookstore.model.dto.BookSearchParametersDto;
-import com.example.jvonlinebookstore.model.dto.CreateBookRequestDto;
-import com.example.jvonlinebookstore.model.dto.UpdateBookRequestDto;
+import com.example.jvonlinebookstore.openapi.api.BooksApi;
+import com.example.jvonlinebookstore.openapi.model.dto.BookDto;
+import com.example.jvonlinebookstore.openapi.model.dto.BookSearchParametersDto;
+import com.example.jvonlinebookstore.openapi.model.dto.CreateBookRequestDto;
+import com.example.jvonlinebookstore.openapi.model.dto.UpdateBookRequestDto;
 import com.example.jvonlinebookstore.service.BookService;
-import jakarta.validation.Valid;
 import java.util.List;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
+import org.springframework.data.domain.Pageable;
 import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.DeleteMapping;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.PutMapping;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 @Slf4j
 @RequiredArgsConstructor
-@RequestMapping("/api/books")
 @RestController
-public class BookController {
+public class BookController implements BooksApi {
     private final BookService bookService;
 
-    @PostMapping
-    public ResponseEntity<BookDto> create(@RequestBody @Valid CreateBookRequestDto request) {
+    @Override
+    public ResponseEntity<BookDto> create(CreateBookRequestDto request) {
         log.debug("Request for create new book: {}", request);
         BookDto bookDto = bookService.save(request);
         return ResponseEntity.ok(bookDto);
     }
 
-    @GetMapping
-    public ResponseEntity<List<BookDto>> getAll() {
+    @Override
+    public ResponseEntity<List<BookDto>> getAll(Pageable pageable) {
         log.debug("Request for get books");
-        List<BookDto> bookDtos = bookService.findAll();
+        List<BookDto> bookDtos = bookService.findAll(pageable);
         return ResponseEntity.ok(bookDtos);
     }
 
-    @GetMapping("/{id}")
-    public ResponseEntity<BookDto> get(@PathVariable Long id) {
+    @Override
+    public ResponseEntity<BookDto> get(Long id) {
         log.debug("Request for get book: {}", id);
         BookDto bookDto = bookService.findById(id);
         return ResponseEntity.ok(bookDto);
     }
 
-    @PutMapping("/{id}")
-    public ResponseEntity<BookDto> update(
-            @PathVariable Long id,
-            @RequestBody @Valid UpdateBookRequestDto request) {
+    @Override
+    public ResponseEntity<BookDto> update(Long id, UpdateBookRequestDto request) {
         log.debug("Request for update book: {}", request);
         BookDto bookDto = bookService.update(id, request);
         return ResponseEntity.ok(bookDto);
     }
 
-    @DeleteMapping("/{id}")
-    public ResponseEntity<Void> delete(@PathVariable Long id) {
+    @Override
+    public ResponseEntity<Void> delete(Long id) {
         log.debug("Request for delete book: {}", id);
         bookService.delete(id);
         return ResponseEntity.noContent().build();
     }
 
-    @GetMapping("/search")
-    public ResponseEntity<List<BookDto>> search(@RequestBody(required = false)
-                                                BookSearchParametersDto parametersDto) {
-        log.debug("Request for search book by parameters: {}", parametersDto);
-        List<BookDto> bookDtos = bookService.search(parametersDto);
+    @Override
+    public ResponseEntity<List<BookDto>> search(BookSearchParametersDto dto, Pageable pageable) {
+        log.debug("Request for search book by parameters: {}", dto);
+        List<BookDto> bookDtos = bookService.search(dto, pageable);
         return ResponseEntity.ok(bookDtos);
     }
 }
