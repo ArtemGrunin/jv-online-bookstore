@@ -55,9 +55,9 @@ public class BookController implements BooksApi {
     }
 
     @Override
-    public ResponseEntity<List<BookDto>> search(BookSearchParametersDto parametersDto) {
+    public ResponseEntity<List<BookDto>> search(BookSearchParametersDto parametersDto, Pageable pageable) {
         log.debug("Request for search book by parameters: {}", parametersDto);
-        List<BookDto> bookDtos = bookService.search(parametersDto);
+        List<BookDto> bookDtos = bookService.search(parametersDto, pageable);
         return ResponseEntity.ok(bookDtos);
     }
 }

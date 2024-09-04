@@ -185,6 +185,7 @@ paths:
         - books
       summary: Search for books by parameters
       operationId: search
+      x-spring-paginated: true
       requestBody:
         description: Search parameters for books
         content:
