@@ -6,10 +6,10 @@ import com.example.jvonlinebookstore.openapi.model.dto.BookSearchParametersDto;
 import com.example.jvonlinebookstore.openapi.model.dto.CreateBookRequestDto;
 import com.example.jvonlinebookstore.openapi.model.dto.UpdateBookRequestDto;
 import com.example.jvonlinebookstore.service.BookService;
-import org.springframework.data.domain.Pageable;
 import java.util.List;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
+import org.springframework.data.domain.Pageable;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.RestController;
 
@@ -55,9 +55,9 @@ public class BookController implements BooksApi {
     }
 
     @Override
-    public ResponseEntity<List<BookDto>> search(BookSearchParametersDto parametersDto, Pageable pageable) {
-        log.debug("Request for search book by parameters: {}", parametersDto);
-        List<BookDto> bookDtos = bookService.search(parametersDto, pageable);
+    public ResponseEntity<List<BookDto>> search(BookSearchParametersDto dto, Pageable pageable) {
+        log.debug("Request for search book by parameters: {}", dto);
+        List<BookDto> bookDtos = bookService.search(dto, pageable);
         return ResponseEntity.ok(bookDtos);
     }
 }

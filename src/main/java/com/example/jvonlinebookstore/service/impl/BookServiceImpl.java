@@ -11,10 +11,10 @@ import com.example.jvonlinebookstore.openapi.model.dto.UpdateBookRequestDto;
 import com.example.jvonlinebookstore.repository.book.BookSpecificationBuilder;
 import com.example.jvonlinebookstore.repository.book.JpaBookRepository;
 import com.example.jvonlinebookstore.service.BookService;
-import org.springframework.data.domain.Pageable;
 import java.util.List;
 import lombok.RequiredArgsConstructor;
 import org.springframework.dao.DataIntegrityViolationException;
+import org.springframework.data.domain.Pageable;
 import org.springframework.data.jpa.domain.Specification;
 import org.springframework.stereotype.Service;
 
@@ -42,7 +42,6 @@ public class BookServiceImpl implements BookService {
                 .map(mapper::toDto)
                 .toList();
     }
-
 
     @Override
     public BookDto findById(Long id) {

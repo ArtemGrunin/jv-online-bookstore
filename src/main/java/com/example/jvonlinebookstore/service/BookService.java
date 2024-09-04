@@ -4,8 +4,8 @@ import com.example.jvonlinebookstore.openapi.model.dto.BookDto;
 import com.example.jvonlinebookstore.openapi.model.dto.BookSearchParametersDto;
 import com.example.jvonlinebookstore.openapi.model.dto.CreateBookRequestDto;
 import com.example.jvonlinebookstore.openapi.model.dto.UpdateBookRequestDto;
-import org.springframework.data.domain.Pageable;
 import java.util.List;
+import org.springframework.data.domain.Pageable;
 
 public interface BookService {
     BookDto save(CreateBookRequestDto request);
