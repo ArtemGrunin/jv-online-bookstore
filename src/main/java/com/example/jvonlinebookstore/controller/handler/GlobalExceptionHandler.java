@@ -2,7 +2,7 @@ package com.example.jvonlinebookstore.controller.handler;
 
 import com.example.jvonlinebookstore.exception.BookAlreadyExistsException;
 import com.example.jvonlinebookstore.exception.BookNotFoundException;
-import com.example.jvonlinebookstore.model.dto.ErrorDto;
+import com.example.jvonlinebookstore.openapi.model.dto.ErrorDto;
 import java.util.List;
 import java.util.UUID;
 import lombok.extern.slf4j.Slf4j;
@@ -59,10 +59,10 @@ public class GlobalExceptionHandler {
     }
 
     private ErrorDto buildErrorDto(List<String> messages, String errorId) {
-        return ErrorDto.builder()
-                .id(errorId)
-                .messages(messages)
-                .build();
+        ErrorDto errorDto = new ErrorDto();
+        errorDto.setId(errorId);
+        errorDto.setMessages(messages);
+        return errorDto;
     }
 
     private String buildErrorId() {

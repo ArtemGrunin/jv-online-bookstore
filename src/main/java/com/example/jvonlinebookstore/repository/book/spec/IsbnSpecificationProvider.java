@@ -2,7 +2,7 @@ package com.example.jvonlinebookstore.repository.book.spec;
 
 import com.example.jvonlinebookstore.model.Book;
 import com.example.jvonlinebookstore.repository.SpecificationProvider;
-import java.util.Arrays;
+import java.util.List;
 import org.springframework.data.jpa.domain.Specification;
 import org.springframework.stereotype.Component;
 
@@ -13,8 +13,9 @@ public class IsbnSpecificationProvider implements SpecificationProvider<Book> {
         return "isbn";
     }
 
-    public Specification<Book> getSpecification(String[] params) {
+    @Override
+    public Specification<Book> getSpecification(List<String> params) {
         return (root, query, criteriaBuilder) -> root.get("isbn")
-                .in(Arrays.stream(params).toArray());
+                .in(params);
     }
 }
