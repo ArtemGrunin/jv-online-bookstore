@@ -1,15 +1,16 @@
 package com.example.jvonlinebookstore.service;
 
-import com.example.jvonlinebookstore.model.dto.BookDto;
-import com.example.jvonlinebookstore.model.dto.BookSearchParametersDto;
-import com.example.jvonlinebookstore.model.dto.CreateBookRequestDto;
-import com.example.jvonlinebookstore.model.dto.UpdateBookRequestDto;
+import com.example.jvonlinebookstore.openapi.model.dto.BookDto;
+import com.example.jvonlinebookstore.openapi.model.dto.BookSearchParametersDto;
+import com.example.jvonlinebookstore.openapi.model.dto.CreateBookRequestDto;
+import com.example.jvonlinebookstore.openapi.model.dto.UpdateBookRequestDto;
 import java.util.List;
+import org.springframework.data.domain.Pageable;
 
 public interface BookService {
     BookDto save(CreateBookRequestDto request);
 
-    List<BookDto> findAll();
+    List<BookDto> findAll(Pageable pageable);
 
     BookDto findById(Long id);
 
@@ -17,5 +18,5 @@ public interface BookService {
 
     void delete(Long id);
 
-    List<BookDto> search(BookSearchParametersDto parameters);
+    List<BookDto> search(BookSearchParametersDto parameters, Pageable pageable);
 }
